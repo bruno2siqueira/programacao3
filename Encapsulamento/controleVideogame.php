@@ -15,4 +15,45 @@ class ControleVideoGame {
         }
     }
 
+    // Método para desligar o controle
+    public function desligar() {
+        $this->estado = "desligado";
+        echo "Controle desligado.\n";
+    }
+
+    // Método para pressionar botões
+    public function pressionarBotao($botao) {
+        if ($this->estado == "ligado" && $this->energia > 0) {
+            echo "Você apertou o botão [$botao].\n";
+            $this->energia -= 10;
+        } elseif ($this->estado == "desligado") {
+            echo "Ligue o controle primeiro!\n";
+        } else {
+            echo "Bateria fraca. Recarregue o controle.\n";
+        }
+    }
+
+    // Método para ver o status
+    public function verStatus() {
+        echo "Estado: $this->estado\n";
+        echo "Energia: $this->energia%\n";
+    }
+
+    // Método para recarregar a energia
+    public function recarregar() {
+        $this->energia = 100;
+        echo "Controle recarregado!\n";
+    }
+}
+
+// Uso do objeto
+$controle = new ControleVideoGame();
+$controle->verStatus();
+$controle->pressionarBotao("A"); // Deve mostrar que está desligado
+$controle->ligar();
+$controle->pressionarBotao("X"); // Deve funcionar
+$controle->verStatus();
+$controle->recarregar();
+$controle->verStatus();
+
 ?>
