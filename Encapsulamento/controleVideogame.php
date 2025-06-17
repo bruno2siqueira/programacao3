@@ -1,59 +1,46 @@
 <?php
 
+// Criando a classe ControleVideoGame
 class ControleVideoGame {
-    // Atributos privados
-    private $estado = "desligado";
+    // Atributos privados (não podem ser acessados de fora)
+    private $ligado = false;
     private $energia = 100;
 
-    // Método para ligar o controle
+    // Método público para ligar o controle
     public function ligar() {
-        if ($this->estado == "ligado") {
-            echo "O controle já está ligado.\n";
+        $this->ligado = true;
+        echo "Controle ligado.\n";
+    }
+
+    // Método público para apertar um botão
+    public function apertarBotaoA() {
+        if ($this->ligado && $this->energia > 0) {
+            echo "Botão A foi pressionado!\n";
+            $this->energia = $this->energia - 10;
         } else {
-            $this->estado = "ligado";
-            echo "Controle ligado!\n";
+            echo "Não é possível usar. Controle desligado ou sem energia.\n";
         }
     }
 
-    // Método para desligar o controle
-    public function desligar() {
-        $this->estado = "desligado";
-        echo "Controle desligado.\n";
-    }
-
-    // Método para pressionar botões
-    public function pressionarBotao($botao) {
-        if ($this->estado == "ligado" && $this->energia > 0) {
-            echo "Você apertou o botão [$botao].\n";
-            $this->energia -= 10;
-        } elseif ($this->estado == "desligado") {
-            echo "Ligue o controle primeiro!\n";
-        } else {
-            echo "Bateria fraca. Recarregue o controle.\n";
-        }
-    }
-
-    // Método para ver o status
-    public function verStatus() {
-        echo "Estado: $this->estado\n";
-        echo "Energia: $this->energia%\n";
-    }
-
-    // Método para recarregar a energia
-    public function recarregar() {
-        $this->energia = 100;
-        echo "Controle recarregado!\n";
+    // Método público para ver a energia restante
+    public function mostrarEnergia() {
+        echo "Energia atual: $this->energia%\n";
     }
 }
 
-// Uso do objeto
+// Criando o objeto controle
 $controle = new ControleVideoGame();
-$controle->verStatus();
-$controle->pressionarBotao("A"); // Deve mostrar que está desligado
+
+// Tentando usar o botão antes de ligar
+$controle->apertarBotaoA();         // Erro esperado
+
+// Ligando o controle
 $controle->ligar();
-$controle->pressionarBotao("X"); // Deve funcionar
-$controle->verStatus();
-$controle->recarregar();
-$controle->verStatus();
+
+// Usando o botão A
+$controle->apertarBotaoA();         // Funciona
+
+// Mostrando energia
+$controle->mostrarEnergia();        // Mostra 90
 
 ?>
